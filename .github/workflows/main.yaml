@@ -24,7 +24,7 @@ jobs:
         pip install Flask==2.2.2 && pip install pytest
     - name: Run test
       run: |
-        python -m pytest -vv app_flask/test_hello.py
+        python -m pytest -vv test_hello.py
   build-and-push-image:
     runs-on: ubuntu-latest
     needs: test

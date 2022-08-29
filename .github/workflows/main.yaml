@@ -21,7 +21,7 @@ jobs:
         python-version: 3.9.13
     - name: Install dependencies
       run: |
-        pip install --upgrade pip && pip install -r requirements.txt
+        pip install --upgrade pip
     - name: Test
       run: |
         python -m pytest -vv test_hello.py

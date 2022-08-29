@@ -21,7 +21,7 @@ jobs:
         python-version: 3.9.13
     - name: Install dependencies
       run: |
-        make install
+        pip install Flask==2.2.2 && pip install pytest
     - name: Run test
       run: |
-        make test
+        python -m pytest -vv app_flask/test_hello.py

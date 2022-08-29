@@ -21,4 +21,4 @@ jobs:
         python-version: 3.9.13
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
+        pip install Flask==2.2.2

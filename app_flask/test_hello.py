@@ -18,7 +18,7 @@ def client():
 
 def test_app(client):
     rv = client.get('/')
-    assert b'Привет от Яндекс Практикума :)' in rv.data
+    assert b'hello :)' in rv.data
 
 #def test_app_version(client):
 #    rv = client.get('/return_version')

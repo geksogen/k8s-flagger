@@ -2,9 +2,12 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: appdeploy-gateway
+  namespace: test
+  labels:
+    app: flask
 spec:
   selector:
-    istio: ingressgateway # use Istio default gateway implementation
+    istio: ingressgateway
   servers:
   - port:
       number: 80

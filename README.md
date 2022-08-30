@@ -60,4 +60,23 @@ curl -X GET http://appdeploy:5000/return_version
 ### Patch istio-ingressgateway to nodeport
 ```BASH
 kubectl patch svc -n istio-system istio-ingressgateway --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"}]'
+kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/gateway.yaml
+kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/virtualservice.yaml
+export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}') && echo $INGRESS_PORT
 ```
+Проверяем ответ от приложения через istio-ingressgateway
+```BASH
+curl 217.28.220.13:31090
+curl 217.28.220.13:31090/return_version
+for i in `seq 10000`; do curl -XGET http://217.28.220.13:31090/return_version;\n; sleep 0.1; done
+watch -n 1 curl -o /dev/null -s -w %{http_code} http://217.28.220.13:31090/return_version
+```
+### Deploy the load testing service to generate traffic during the canary analysis
+```BASH
+helm upgrade -i flagger-loadtester flagger/loadtester --namespace=test
+```
+### Before creating canary we need to delete the virtual service, as it will now be managed by the flagger from the above canary.yaml file
+```BASH
+kubectl -n test delete -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/virtualservice.yaml
+```
+### Create Canary

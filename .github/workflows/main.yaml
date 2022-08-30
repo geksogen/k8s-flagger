@@ -49,8 +49,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ github.run_number }}
           tags: |
-          type=raw,value=latest,enable=${{ endsWith(GitHub.ref, 'master') }}
-          type=ref,event=tag
+            type=raw,value=latest,enable=${{ endsWith(GitHub.ref, 'master') }}
+            type=ref,event=tag
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2

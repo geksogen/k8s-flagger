@@ -48,7 +48,7 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: ${{ env.REGISTRY }}/${{ github.run_number }}
-          tag-custom: latest
+          tag-custom: ${{ github.run_number }}
           tag-semver: |
             {{raw}}
       - name: Build and push Docker image

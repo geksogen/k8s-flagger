@@ -80,3 +80,6 @@ helm upgrade -i flagger-loadtester flagger/loadtester --namespace=test
 kubectl -n test delete -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/virtualservice.yaml
 ```
 ### Create Canary
+```BASH
+kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/canary.yaml
+```

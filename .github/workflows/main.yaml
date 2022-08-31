@@ -24,6 +24,7 @@ jobs:
       run: |
         python -m pytest -vv test_hello.py
   build:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:

@@ -12,24 +12,24 @@ istioctl install --set profile=demo -y
 ```BASH
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.10/samples/addons/prometheus.yaml
 ```
-### Install Flagger
+#### Install Flagger
 ```BASH
 helm repo add flagger https://flagger.app
 kubectl apply -f https://raw.githubusercontent.com/fluxcd/flagger/main/artifacts/flagger/crd.yaml
 helm upgrade -i flagger flagger/flagger --namespace=istio-system --set crd.create=false --set meshProvider=istio --set metricsServer=http://prometheus:9090
 ```
-### Install Grafana
+#### Install Grafana
 ```BASH
 helm upgrade -i flagger-grafana flagger/grafana --namespace=istio-system --set url=http://prometheus.istio-system:9090 --set user=admin --set password=change-me
 kubectl patch svc flagger-grafana -n istio-system -p '{"spec": {"type": "NodePort"}}'
 kubectl -n istio-system get svc
 ```
-### Install Kiali
+#### Install Kiali
 ```BASH
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.14/samples/addons/kiali.yaml
 kubectl patch svc kiali -n istio-system -p '{"spec": {"type": "NodePort"}}'
 ```
-###Name pod from istio-system namespaces                                    
+#### Name pod from istio-system namespaces                                    
 flagger-5c8658c64-jplrh                 
 flagger-grafana-6594969455-lhwbk        
 istio-egressgateway-56b4ddcfd6-9n5zb    
@@ -39,16 +39,13 @@ kiali-748d5cdbfc-blcsp
 prometheus-69f7f4d689-cvrcx             
 
 ### Deploy app
-Создаем namespace test и тегируем его для inject istio side car
 ```BASH
 kubectl create ns test
 kubectl label namespace test istio-injection=enabled
 ```
-Деплоим app в кластер. Целевой namespace test.
 ```BASH
 kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/deployment.yaml
 ```
-Проверяем приложение
 ```BASH
 kubectl -n test run -i -t nginx --rm=true --image=nginx -- bash
 ```
@@ -56,8 +53,7 @@ kubectl -n test run -i -t nginx --rm=true --image=nginx -- bash
 curl -X GET http://appdeploy:5000
 curl -X GET http://appdeploy:5000/return_version
 ```
-
-### Patch istio-ingressgateway to nodeport
+#### Patch istio-ingressgateway to nodeport
 ```BASH
 kubectl patch svc -n istio-system istio-ingressgateway --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"}]'
 kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/gateway.yaml
@@ -71,19 +67,38 @@ curl 217.28.220.13:31090/return_version
 for i in `seq 10000`; do curl -XGET http://217.28.220.13:31090/return_version;\n; sleep 0.1; done
 watch -n 1 curl -o /dev/null -s -w %{http_code} http://217.28.220.13:31090/return_version
 ```
-### Deploy the load testing service to generate traffic during the canary analysis
+#### Deploy the load testing service to generate traffic during the canary analysis
 ```BASH
 helm upgrade -i flagger-loadtester flagger/loadtester --namespace=test
 ```
-### Before creating canary we need to delete the virtual service, as it will now be managed by the flagger from the above canary.yaml file
+#### Before creating canary we need to delete the virtual service, as it will now be managed by the flagger from the above canary.yaml file
 ```BASH
 kubectl -n test delete -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/virtualservice.yaml
 ```
-### Create Canary
+#### Create Canary
 ```BASH
 kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/canary.yaml
 ```
 
-Initial
-Progressing
-Succeeded
+#### Run traffic to app
+```BASH
+for i in `seq 10000`; do curl -XGET http://217.28.220.13:31090/return_version;\; sleep 0.1; done
+watch -n 1 curl -o /dev/null -s -w %{http_code} curl -XGET http://217.28.220.13:31090/return_version
+```
+
+#### Change image tag
+```BASH
+kubectl -n test set image deployment/appdeploy appdeploy=geksogen/k8s-flagger:47
+```
+
+#### Result
+
+- [x] Определение изменений в namespace (deployment spec, secrets or configmaps changes)
+- [ ] Проверка жизнеспособности Cannary pods
+- [ ] Тестирование Cannary pods
+- [ ] Если тестирование с ошибкой останавливаем процесс
+- [ ] Тестирование успешно, гранулируем трафик
+- [ ] Если тестирование с ошибкой останавливаем процесс
+- [ ] Переключение трафика на Cannary 
+- [ ] Удаление ресурсов прежней версии
+- [ ] Cannary становится Latest версией

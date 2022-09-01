@@ -40,13 +40,13 @@ spec:
     webhooks:
       - name: acceptance-test
         type: pre-rollout
-        url: http://flagger-loadtester.test/ # гребанное пространство имен :)
+        url: http://flagger-loadtester.test/ # пространство имен :)
         timeout: 10s
         metadata:
           type: bash
-          cmd: "curl http://appdeploy-canary.test:5000/return_version"
+          cmd: "curl http://appdeploy-canary.test:5000/return_version" # пространство имен :)
       - name: load-test
         url: http://flagger-loadtester.test/
         timeout: 5s
         metadata:
-          cmd: "hey -z 1m -q 10 -c 2 http://appdeploy-canary.test:5000/return_version"
+          cmd: "hey -z 1m -q 10 -c 2 http://appdeploy-canary.test:5000/return_version" # пространство имен :)

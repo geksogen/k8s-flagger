@@ -83,3 +83,7 @@ kubectl -n test delete -f https://raw.githubusercontent.com/geksogen/k8s-flagger
 ```BASH
 kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/canary.yaml
 ```
+
+Initial
+Progressing
+Succeeded

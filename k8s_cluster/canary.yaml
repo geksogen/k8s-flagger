@@ -42,4 +42,4 @@ spec:
         url: http://flagger-loadtester.default/
         timeout: 5s
         metadata:
-          cmd: "hey -z 1m -q 10 -c 2 curl http://appdeploy:5000/return_version"
+          cmd: "hey -z 1m -q 10 -c 2 curl http://217.28.220.13:31090/return_version"

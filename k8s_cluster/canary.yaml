@@ -20,11 +20,11 @@ spec:
     # schedule interval (default 60s)
     interval: 1m
     # max number of failed metric checks before rollback
-    threshold: 5
+    threshold: 3
     # max traffic percentage routed to canary percentage (0-100)
     maxWeight: 50
     # canary increment step percentage (0-100)
-    stepWeight: 10
+    stepWeight: 20
     metrics:
     - name: request-success-rate
       # minimum req success rate (non 5xx responses)

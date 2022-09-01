@@ -5,7 +5,6 @@ on:
       - master
 
 env:
-  #REGISTRY: ghcr.io
   IMAGE_NAME: k8s-flagger
 
 jobs:

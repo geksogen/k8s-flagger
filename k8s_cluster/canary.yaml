@@ -38,13 +38,6 @@ spec:
       interval: 30s
     # testing (optional)
     webhooks:
-      - name: acceptance-test
-        type: pre-rollout
-        url: http://flagger-loadtester.default/
-        timeout: 30s
-        metadata:
-          type: bash
-          cmd: "curl http://appdeploy-canary:5000/return_version"
       - name: load-test
         url: http://flagger-loadtester.default/
         timeout: 5s

@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: appdeploy
-        image: geksogen/k8s-flagger:48
+        image: geksogen/k8s-flagger:59
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000

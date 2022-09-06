@@ -102,3 +102,18 @@ kubectl -n test set image deployment/appdeploy appdeploy=geksogen/k8s-flagger:47
 - [ ] Переключение трафика на Cannary 
 - [ ] Удаление ресурсов прежней версии
 - [ ] Cannary становится Latest версией
+
+#### Clear resource
+```BASH
+# Delete app
+kubectl -n test delete all -l app=flask
+kubectl -n test delete gateway appdeploy-gateway
+kubectl -n test delete virtualservice appdeploy
+helm -n test uninstall flagger-loadtester
+kubectl delete ns test
+# Delete istio
+cd <istio folder>
+export PATH=$PWD/bin:$PATH
+istioctl x uninstall --purge
+kubectl delete namespace istio-system
+```

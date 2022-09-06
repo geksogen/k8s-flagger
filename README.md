@@ -26,7 +26,7 @@ kubectl -n istio-system get svc
 ```
 #### Install Kiali
 ```BASH
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.14/samples/addons/kiali.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.15/samples/addons/kiali.yaml
 kubectl patch svc kiali -n istio-system -p '{"spec": {"type": "NodePort"}}'
 ```
 #### Name pod from istio-system namespaces                                    
@@ -67,6 +67,7 @@ curl 217.28.220.13:31090/return_version
 for i in `seq 10000`; do curl -XGET http://217.28.220.13:31090/return_version;\n; sleep 0.1; done
 watch -n 1 curl -o /dev/null -s -w %{http_code} http://217.28.220.13:31090/return_version
 ```
+Смотрим в Kiali граф трафика
 #### Deploy the load testing service to generate traffic during the canary analysis
 ```BASH
 helm upgrade -i flagger-loadtester flagger/loadtester --namespace=test
@@ -82,8 +83,13 @@ kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k
 
 #### Run traffic to app
 ```BASH
-for i in `seq 10000`; do curl -XGET http://217.28.220.13:31090/return_version;\; sleep 0.1; done
+for i in `seq 10000`; do curl -XGET http://217.28.220.13:32158/return_version;\; sleep 0.1; done
 watch -n 1 curl -o /dev/null -s -w %{http_code} curl -XGET http://217.28.220.13:31090/return_version
+```
+
+#### See canary status
+```BASH
+watch kubectl get canaries --all-namespaces
 ```
 
 #### Change image tag

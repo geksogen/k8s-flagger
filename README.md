@@ -3,8 +3,8 @@
 ### Configure cluster
 #### Install istio
 ```BASH
-curl -L https://istio.io/downloadIstio | sh -
-cd istio-1.14.3
+curl -L https://istio.io/downloadIstio | sh
+cd istio-1.15.0
 export PATH=$PWD/bin:$PATH
 istioctl install --set profile=demo -y
 ```

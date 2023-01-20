@@ -4,7 +4,7 @@
 #### Install istio
 ```BASH
 curl -L https://istio.io/downloadIstio | sh
-cd istio-1.15.0
+cd istio-1.16.1
 export PATH=$PWD/bin:$PATH
 istioctl install --set profile=demo -y
 ```

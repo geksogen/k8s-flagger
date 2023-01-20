@@ -46,6 +46,8 @@ kubectl label namespace test istio-injection=enabled
 ```BASH
 kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/deployment.yaml
 ```
+#### New window
+
 ```BASH
 kubectl -n test run -i -t nginx --rm=true --image=nginx -- bash
 ```
@@ -62,10 +64,10 @@ export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -
 ```
 Проверяем ответ от приложения через istio-ingressgateway
 ```BASH
-curl 217.28.220.13:31090
-curl 217.28.220.13:31090/return_version
-for i in `seq 10000`; do curl -XGET http://217.28.220.13:31090/return_version;\n; sleep 0.1; done
-watch -n 1 curl -o /dev/null -s -w %{http_code} http://217.28.220.13:31090/return_version
+curl 217.28.220.13:<port ingress>
+curl 217.28.220.13:<port ingress>/return_version
+for i in `seq 10000`; do curl -XGET http://217.28.220.13:<port ingress>/return_version;\n; sleep 0.1; done
+watch -n 1 curl -o /dev/null -s -w %{http_code} http://217.28.220.13:<port ingress>/return_version
 ```
 Смотрим в Kiali граф трафика
 #### Deploy the load testing service to generate traffic during the canary analysis
@@ -83,8 +85,8 @@ kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k
 
 #### Run traffic to app
 ```BASH
-for i in `seq 10000`; do curl -XGET http://217.28.220.13:32158/return_version;\; sleep 0.1; done
-watch -n 1 curl -o /dev/null -s -w %{http_code} curl -XGET http://217.28.220.13:31090/return_version
+for i in `seq 10000`; do curl -XGET http://217.28.220.13:<port ingress>/return_version;\; sleep 0.1; done
+watch -n 1 curl -o /dev/null -s -w %{http_code} curl -XGET http://217.28.220.13:<port ingress>/return_version
 ```
 
 #### See canary status

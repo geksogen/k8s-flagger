@@ -7,4 +7,4 @@ def home():
 
 @app.route('/return_version')
 def return_app_version():
-    return "version 5.0"
+    return "version 55.0"

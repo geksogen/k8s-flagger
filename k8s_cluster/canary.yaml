@@ -36,6 +36,12 @@ spec:
       thresholdRange:
         max: 500
       interval: 30s
+    - name: "404s percentage"
+      templateRef:
+        name: not-found-percentage
+      thresholdRange:
+        max: 5
+      interval: 1m
     # testing (optional)
     webhooks:
       - name: acceptance-test

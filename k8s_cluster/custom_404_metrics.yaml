@@ -1,4 +1,4 @@
-piVersion: flagger.app/v1beta1
+apiVersion: flagger.app/v1beta1
 kind: MetricTemplate
 metadata:
   name: not-found-percentage

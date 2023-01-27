@@ -39,6 +39,7 @@ spec:
     - name: "404s percentage"
       templateRef:
         name: not-found-percentage
+        namespace: istio-system
       thresholdRange:
         max: 5
       interval: 1m

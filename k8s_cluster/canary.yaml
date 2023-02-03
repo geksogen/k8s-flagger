@@ -42,7 +42,7 @@ spec:
         namespace: istio-system
       thresholdRange:
         max: 5
-      interval: 1m
+      interval: 30s
     # testing (optional)
     webhooks:
       - name: acceptance-test

@@ -78,6 +78,11 @@ helm upgrade -i flagger-loadtester flagger/loadtester --namespace=test
 ```BASH
 kubectl -n test delete -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/virtualservice.yaml
 ```
+#### Create Castom 404 metrix
+```BASH
+kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/custom_404_metrics.yaml
+```
+
 #### Create Canary
 ```BASH
 kubectl apply -f https://raw.githubusercontent.com/geksogen/k8s-flagger/master/k8s_cluster/canary.yaml

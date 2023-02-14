@@ -5,6 +5,6 @@ app = Flask(__name__)
 def home():
    return "hello :)"
 
-@app.route('/return_version')
+@app.route('/return')
 def return_app_version():
-    return "version 566"
+    return "version 866"

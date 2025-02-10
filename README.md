@@ -3,12 +3,13 @@
 ### Configure cluster
 #### Install istio
 ```BASH
+export ISTIO_VERSION=1.16.1
 curl -L https://istio.io/downloadIstio | sh
 cd istio-1.16.1
 export PATH=$PWD/bin:$PATH
 istioctl install --set profile=demo -y
 ```
-#### Install Flagger
+#### Install Helm
 ```BASH
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh

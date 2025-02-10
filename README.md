@@ -8,10 +8,17 @@ cd istio-1.16.1
 export PATH=$PWD/bin:$PATH
 istioctl install --set profile=demo -y
 ```
+#### Install Flagger
+```BASH
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+```
 #### Install prometheus
 ```BASH
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.10/samples/addons/prometheus.yaml
 ```
+
 #### Install Flagger
 ```BASH
 helm repo add flagger https://flagger.app

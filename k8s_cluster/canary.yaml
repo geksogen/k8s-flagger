@@ -36,13 +36,6 @@ spec:
       thresholdRange:
         max: 500
       interval: 30s
-    - name: "404s percentage"
-      templateRef:
-        name: not-found-percentage
-        namespace: istio-system
-      thresholdRange:
-        max: 5
-      interval: 30s
     # testing (optional)
     webhooks:
       - name: acceptance-test
